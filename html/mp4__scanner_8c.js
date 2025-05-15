@@ -1,8 +1,8 @@
 var mp4__scanner_8c =
 [
-    [ "MP4Duration", "structMP4Duration.html", "structMP4Duration" ],
-    [ "Stats", "structStats.html", "structStats" ],
-    [ "Options", "structOptions.html", "structOptions" ],
+    [ "MP4Duration", "struct_m_p4_duration.html", "struct_m_p4_duration" ],
+    [ "Stats", "struct_stats.html", "struct_stats" ],
+    [ "Options", "struct_options.html", "struct_options" ],
     [ "COLOR_GREEN", "mp4__scanner_8c.html#afc9149f5de51bd9ac4f5ebbfa153f018", null ],
     [ "COLOR_RESET", "mp4__scanner_8c.html#a17f760256046df23dd0ab46602f04d02", null ],
     [ "COLOR_YELLOW", "mp4__scanner_8c.html#a4534b577b74a58b0f4b7be027af664e0", null ],

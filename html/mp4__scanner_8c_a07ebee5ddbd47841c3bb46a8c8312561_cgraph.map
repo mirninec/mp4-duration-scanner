@@ -1,6 +1,12 @@
 <map id="get_mp4_duration" name="get_mp4_duration">
-<area shape="rect" id="node1" title="Получение длительности MP4&#45;файла." alt="" coords="5,56,145,83"/>
-<area shape="rect" id="node2" href="$mp4__scanner_8c.html#a5f36eab0c293def17389d05756abb89b" title="Поиск атома по имени." alt="" coords="193,5,280,32"/>
-<area shape="rect" id="node3" href="$mp4__scanner_8c.html#a161a21cfb49accf9fed1bdf0a3d42d23" title="Чтение 4 байт в формате big&#45;endian." alt="" coords="481,56,587,83"/>
-<area shape="rect" id="node4" href="$mp4__scanner_8c.html#a7edeab36df12870782ef1426bf8ab346" title="Чтение 8 байт в формате big&#45;endian." alt="" coords="328,56,433,83"/>
+<area shape="rect" id="Node000001" title="Получение длительности MP4&#45;файла." alt="" coords="5,56,130,83"/>
+<area shape="rect" id="Node000002" href="$mp4__scanner_8c.html#a5f36eab0c293def17389d05756abb89b" title="Поиск атома по имени." alt="" coords="178,5,256,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,53,162,34,164,39,110,58"/>
+<area shape="rect" id="Node000003" href="$mp4__scanner_8c.html#a161a21cfb49accf9fed1bdf0a3d42d23" title="Чтение 4 байт в формате big&#45;endian." alt="" coords="447,56,543,83"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="130,79,255,94,327,97,399,92,436,85,437,90,400,97,327,102,254,100,130,84"/>
+<area shape="rect" id="Node000004" href="$mp4__scanner_8c.html#a7edeab36df12870782ef1426bf8ab346" title="Чтение 8 байт в формате big&#45;endian." alt="" coords="304,56,399,83"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="130,67,288,67,288,72,130,72"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="257,20,400,41,433,49,432,54,399,47,256,25"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="256,30,301,48,299,53,254,35"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="400,67,432,67,432,72,400,72"/>
 </map>

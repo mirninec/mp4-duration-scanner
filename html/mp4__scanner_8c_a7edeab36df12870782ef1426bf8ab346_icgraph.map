@@ -1,7 +1,13 @@
 <map id="read_u64_be" name="read_u64_be">
-<area shape="rect" id="node1" title="Чтение 8 байт в формате big&#45;endian." alt="" coords="596,31,701,57"/>
-<area shape="rect" id="node2" href="$mp4__scanner_8c.html#a5f36eab0c293def17389d05756abb89b" title="Поиск атома по имени." alt="" coords="461,5,548,32"/>
-<area shape="rect" id="node3" href="$mp4__scanner_8c.html#a07ebee5ddbd47841c3bb46a8c8312561" title="Получение длительности MP4&#45;файла." alt="" coords="273,31,413,57"/>
-<area shape="rect" id="node4" href="$mp4__scanner_8c.html#ab7623127c01dad97d3c546b524c9cd53" title="Рекурсивное сканирование директории." alt="" coords="108,31,225,57"/>
-<area shape="rect" id="node5" href="$mp4__scanner_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Точка входа в программу." alt="" coords="5,31,60,57"/>
+<area shape="rect" id="Node000001" title="Чтение 8 байт в формате big&#45;endian." alt="" coords="556,31,651,57"/>
+<area shape="rect" id="Node000002" href="$mp4__scanner_8c.html#a5f36eab0c293def17389d05756abb89b" title="Поиск атома по имени." alt="" coords="429,5,508,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="540,35,507,29,508,23,541,30"/>
+<area shape="rect" id="Node000003" href="$mp4__scanner_8c.html#a07ebee5ddbd47841c3bb46a8c8312561" title="Получение длительности MP4&#45;файла." alt="" coords="257,31,381,57"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="540,47,382,47,382,41,540,41"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="415,30,382,36,381,31,414,25"/>
+<area shape="rect" id="Node000004" href="$mp4__scanner_8c.html#ab7623127c01dad97d3c546b524c9cd53" title="Рекурсивное сканирование директории." alt="" coords="103,31,209,57"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="241,47,209,47,209,41,241,41"/>
+<area shape="poly" id="edge5_Node000004_Node000004" title=" " alt="" coords="176,17,169,12,156,9,143,11,137,16,135,22,138,29,133,31,130,22,132,13,141,6,156,4,171,7,180,13"/>
+<area shape="rect" id="Node000005" href="$mp4__scanner_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Точка входа в программу." alt="" coords="5,31,55,57"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="87,47,55,47,55,41,87,41"/>
 </map>

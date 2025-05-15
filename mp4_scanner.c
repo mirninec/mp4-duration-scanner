@@ -53,8 +53,8 @@ typedef struct
 */
 typedef struct
 {
-    int total_files; /** < Общее количество MP4 - файлов */
-    int total_folders_with_mp4; /** < Количество папок с MP4 */
+    int total_files;               /** < Общее количество MP4 - файлов */
+    int total_folders_with_mp4;    /** < Количество папок с MP4 */
     double total_duration_seconds; /**< Общая длительность видео */
 } Stats;
 

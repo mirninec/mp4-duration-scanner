@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "📼 MP4 Duration Scanner ⏱️", "index.html", [
-    [ "📼 MP4 Duration Scanner ⏱️", "md_README.html", null ],
+    [ "📼 MP4 Duration Scanner ⏱️", "md__r_e_a_d_m_e.html", null ],
     [ "Структуры данных", "annotated.html", [
       [ "Структуры данных", "annotated.html", "annotated_dup" ],
       [ "Алфавитный указатель структур данных", "classes.html", null ],
