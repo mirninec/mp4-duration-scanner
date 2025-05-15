@@ -1,3 +1,18 @@
+/**
+
+@file mp4_scanner.c
+
+@brief Утилита для рекурсивного поиска MP4-файлов в папках и подсчёта их общей длительности.
+
+
+
+Поддерживает кроссплатформенность (Linux/Windows),
+
+может отображать подробную информацию (-v),
+
+извлекает длительность MP4-файлов через парсинг атомов moov/mvhd.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -20,24 +35,44 @@
 #define COLOR_RESET "\033[0m"
 #endif
 
+/**
+ * @struct MP4Duration
+ * @brief Структура для хранения длительности MP4-файла.
+ */
 typedef struct
 {
-    double duration_seconds;
-    int found;
+    double duration_seconds; /**< Длительность в секундах */
+    int found;               /**< Флаг, указывающий, была ли найдена длительность */
 } MP4Duration;
 
+/**
+
+@struct Stats
+
+@brief Статистика по найденным MP4-файлам.
+*/
 typedef struct
 {
-    int total_files;
-    int total_folders_with_mp4;
-    double total_duration_seconds;
+    int total_files; /** < Общее количество MP4 - файлов */
+    int total_folders_with_mp4; /** < Количество папок с MP4 */
+    double total_duration_seconds; /**< Общая длительность видео */
 } Stats;
 
+/**
+
+@struct Options
+
+@brief Опции командной строки.
+*/
 typedef struct
 {
-    int verbose;
+    int verbose; /**< Флаг подробного вывода */
 } Options;
 
+/**
+
+@brief Чтение 4 байт в формате big-endian.
+*/
 uint32_t read_u32_be(FILE *file)
 {
     uint8_t buf[4];
@@ -46,6 +81,10 @@ uint32_t read_u32_be(FILE *file)
     return (buf[0] << 24) | (buf[1] << 16) | (buf[2] << 8) | buf[3];
 }
 
+/**
+
+@brief Чтение 8 байт в формате big-endian.
+*/
 uint64_t read_u64_be(FILE *file)
 {
     uint64_t high = read_u32_be(file);
@@ -53,6 +92,10 @@ uint64_t read_u64_be(FILE *file)
     return (high << 32) | low;
 }
 
+/**
+
+@brief Поиск атома по имени.
+*/
 int find_atom(FILE *file, const char *atom_type, uint64_t *size, uint64_t *start_pos)
 {
     char box_type[5] = {0};
@@ -78,12 +121,16 @@ int find_atom(FILE *file, const char *atom_type, uint64_t *size, uint64_t *start
         else
         {
             if (fseek(file, box_size - 8, SEEK_CUR) != 0)
-                break; // Исправлено: удалено "blijft"
+                break;
         }
     }
     return 0;
 }
 
+/**
+
+@brief Получение длительности MP4-файла.
+*/
 MP4Duration get_mp4_duration(const char *filename)
 {
     FILE *file = fopen(filename, "rb");
@@ -107,7 +154,7 @@ MP4Duration get_mp4_duration(const char *filename)
 
     uint8_t version;
     fread(&version, 1, 1, file);
-    fseek(file, 3, SEEK_CUR); // flags
+    fseek(file, 3, SEEK_CUR); // Пропускаем флаги
 
     uint32_t timescale;
     double duration;
@@ -135,6 +182,10 @@ MP4Duration get_mp4_duration(const char *filename)
     return result;
 }
 
+/**
+
+@brief Форматирует длительность в часы, минуты и секунды.
+*/
 void format_duration(double total_seconds, int *hours, int *minutes, int *seconds)
 {
     *hours = (int)(total_seconds / 3600);
@@ -142,6 +193,10 @@ void format_duration(double total_seconds, int *hours, int *minutes, int *second
     *seconds = (int)total_seconds % 60;
 }
 
+/**
+
+@brief Усечение длинных путей для отображения.
+*/
 void truncate_path(const char *input, char *output, size_t max_len)
 {
     size_t len = strlen(input);
@@ -162,6 +217,10 @@ void truncate_path(const char *input, char *output, size_t max_len)
 #endif
 }
 
+/**
+
+@brief Рекурсивное сканирование директории.
+*/
 void scan_directory(const char *path, Stats *stats, Options *opts)
 {
     DIR *dir = opendir(path);
@@ -225,6 +284,10 @@ void scan_directory(const char *path, Stats *stats, Options *opts)
     closedir(dir);
 }
 
+/**
+
+@brief Точка входа в программу.
+*/
 int main(int argc, char *argv[])
 {
 #ifdef _WIN32
@@ -236,7 +299,7 @@ int main(int argc, char *argv[])
     char path[PATH_MAX] = {0};
     const char *target_dir = NULL;
 
-    // Parse args
+    // Обработка аргументов командной строки
     for (int i = 1; i < argc; ++i)
     {
         if (strcmp(argv[i], "-v") == 0)
@@ -267,7 +330,7 @@ int main(int argc, char *argv[])
 
     printf("\n\xF0\x9F\x93\x8A Result:\n");
     printf("\xF0\x9F\x91\x8C Found " COLOR_YELLOW "%d" COLOR_RESET " MP4 files in " COLOR_YELLOW "%d" COLOR_RESET " folders.\n",
-           stats.total_files, stats.total_folders_with_mp4); // Исправлено: stats-> на stats.
+           stats.total_files, stats.total_folders_with_mp4);
     printf("\xF0\x9F\x8F\x81 Total duration: " COLOR_YELLOW "%d:%02d:%02d" COLOR_RESET "\n", h, m, s);
 
     return 0;

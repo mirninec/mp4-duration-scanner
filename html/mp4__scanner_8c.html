@@ -1,0 +1,610 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>📼 MP4 Duration Scanner ⏱️: Файл mp4_scanner.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">📼 MP4 Duration Scanner ⏱️
+   &#160;<span id="projectnumber">0.1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('mp4__scanner_8c.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Структуры данных</a> &#124;
+<a href="#define-members">Макросы</a> &#124;
+<a href="#func-members">Функции</a>  </div>
+  <div class="headertitle">
+<div class="title">Файл mp4_scanner.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Утилита для рекурсивного поиска MP4-файлов в папках и подсчёта их общей длительности.  
+<a href="#details">Подробнее...</a></p>
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;dirent.h&gt;</code><br />
+<code>#include &lt;sys/stat.h&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &lt;ctype.h&gt;</code><br />
+<code>#include &lt;limits.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Граф включаемых заголовочных файлов для mp4_scanner.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="mp4__scanner_8c__incl.png" border="0" usemap="#amp4__scanner_8c" alt=""/></div>
+<map name="amp4__scanner_8c" id="amp4__scanner_8c">
+<area shape="rect" title="Утилита для рекурсивного поиска MP4&#45;файлов в папках и подсчёта их общей длительности." alt="" coords="358,5,477,32"/>
+<area shape="rect" title=" " alt="" coords="5,80,72,107"/>
+<area shape="rect" title=" " alt="" coords="97,80,167,107"/>
+<area shape="rect" title=" " alt="" coords="191,80,262,107"/>
+<area shape="rect" title=" " alt="" coords="286,80,357,107"/>
+<area shape="rect" title=" " alt="" coords="381,80,453,107"/>
+<area shape="rect" title=" " alt="" coords="477,80,563,107"/>
+<area shape="rect" title=" " alt="" coords="587,80,661,107"/>
+<area shape="rect" title=" " alt="" coords="686,80,757,107"/>
+<area shape="rect" title=" " alt="" coords="781,80,851,107"/>
+</map>
+</div>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Структуры данных</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structMP4Duration.html">MP4Duration</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Структура для хранения длительности MP4-файла.  <a href="structMP4Duration.html#details">Подробнее...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structStats.html">Stats</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Статистика по найденным MP4-файлам.  <a href="structStats.html#details">Подробнее...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOptions.html">Options</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Опции командной строки.  <a href="structOptions.html#details">Подробнее...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Макросы</h2></td></tr>
+<tr class="memitem:a4534b577b74a58b0f4b7be027af664e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mp4__scanner_8c.html#a4534b577b74a58b0f4b7be027af664e0">COLOR_YELLOW</a>&#160;&#160;&#160;&quot;\033[33m&quot;</td></tr>
+<tr class="separator:a4534b577b74a58b0f4b7be027af664e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc9149f5de51bd9ac4f5ebbfa153f018"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mp4__scanner_8c.html#afc9149f5de51bd9ac4f5ebbfa153f018">COLOR_GREEN</a>&#160;&#160;&#160;&quot;\033[32m&quot;</td></tr>
+<tr class="separator:afc9149f5de51bd9ac4f5ebbfa153f018"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17f760256046df23dd0ab46602f04d02"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mp4__scanner_8c.html#a17f760256046df23dd0ab46602f04d02">COLOR_RESET</a>&#160;&#160;&#160;&quot;\033[0m&quot;</td></tr>
+<tr class="separator:a17f760256046df23dd0ab46602f04d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Функции</h2></td></tr>
+<tr class="memitem:a161a21cfb49accf9fed1bdf0a3d42d23"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mp4__scanner_8c.html#a161a21cfb49accf9fed1bdf0a3d42d23">read_u32_be</a> (FILE *file)</td></tr>
+<tr class="memdesc:a161a21cfb49accf9fed1bdf0a3d42d23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Чтение 4 байт в формате big-endian.  <a href="mp4__scanner_8c.html#a161a21cfb49accf9fed1bdf0a3d42d23">Подробнее...</a><br /></td></tr>
+<tr class="separator:a161a21cfb49accf9fed1bdf0a3d42d23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7edeab36df12870782ef1426bf8ab346"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mp4__scanner_8c.html#a7edeab36df12870782ef1426bf8ab346">read_u64_be</a> (FILE *file)</td></tr>
+<tr class="memdesc:a7edeab36df12870782ef1426bf8ab346"><td class="mdescLeft">&#160;</td><td class="mdescRight">Чтение 8 байт в формате big-endian.  <a href="mp4__scanner_8c.html#a7edeab36df12870782ef1426bf8ab346">Подробнее...</a><br /></td></tr>
+<tr class="separator:a7edeab36df12870782ef1426bf8ab346"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f36eab0c293def17389d05756abb89b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mp4__scanner_8c.html#a5f36eab0c293def17389d05756abb89b">find_atom</a> (FILE *file, const char *atom_type, uint64_t *size, uint64_t *start_pos)</td></tr>
+<tr class="memdesc:a5f36eab0c293def17389d05756abb89b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Поиск атома по имени.  <a href="mp4__scanner_8c.html#a5f36eab0c293def17389d05756abb89b">Подробнее...</a><br /></td></tr>
+<tr class="separator:a5f36eab0c293def17389d05756abb89b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07ebee5ddbd47841c3bb46a8c8312561"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structMP4Duration.html">MP4Duration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mp4__scanner_8c.html#a07ebee5ddbd47841c3bb46a8c8312561">get_mp4_duration</a> (const char *filename)</td></tr>
+<tr class="memdesc:a07ebee5ddbd47841c3bb46a8c8312561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получение длительности MP4-файла.  <a href="mp4__scanner_8c.html#a07ebee5ddbd47841c3bb46a8c8312561">Подробнее...</a><br /></td></tr>
+<tr class="separator:a07ebee5ddbd47841c3bb46a8c8312561"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c2a0224143b17328733adf1a8d538ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mp4__scanner_8c.html#a5c2a0224143b17328733adf1a8d538ce">format_duration</a> (double total_seconds, int *hours, int *minutes, int *seconds)</td></tr>
+<tr class="memdesc:a5c2a0224143b17328733adf1a8d538ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Форматирует длительность в часы, минуты и секунды.  <a href="mp4__scanner_8c.html#a5c2a0224143b17328733adf1a8d538ce">Подробнее...</a><br /></td></tr>
+<tr class="separator:a5c2a0224143b17328733adf1a8d538ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01d4f7e7055b9bcd2deb858dd2dd4015"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mp4__scanner_8c.html#a01d4f7e7055b9bcd2deb858dd2dd4015">truncate_path</a> (const char *input, char *output, size_t max_len)</td></tr>
+<tr class="memdesc:a01d4f7e7055b9bcd2deb858dd2dd4015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Усечение длинных путей для отображения.  <a href="mp4__scanner_8c.html#a01d4f7e7055b9bcd2deb858dd2dd4015">Подробнее...</a><br /></td></tr>
+<tr class="separator:a01d4f7e7055b9bcd2deb858dd2dd4015"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7623127c01dad97d3c546b524c9cd53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mp4__scanner_8c.html#ab7623127c01dad97d3c546b524c9cd53">scan_directory</a> (const char *path, <a class="el" href="structStats.html">Stats</a> *stats, <a class="el" href="structOptions.html">Options</a> *opts)</td></tr>
+<tr class="memdesc:ab7623127c01dad97d3c546b524c9cd53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Рекурсивное сканирование директории.  <a href="mp4__scanner_8c.html#ab7623127c01dad97d3c546b524c9cd53">Подробнее...</a><br /></td></tr>
+<tr class="separator:ab7623127c01dad97d3c546b524c9cd53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mp4__scanner_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
+<tr class="memdesc:a0ddf1224851353fc92bfbff6f499fa97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Точка входа в программу.  <a href="mp4__scanner_8c.html#a0ddf1224851353fc92bfbff6f499fa97">Подробнее...</a><br /></td></tr>
+<tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p>Утилита для рекурсивного поиска MP4-файлов в папках и подсчёта их общей длительности. </p>
+<p>Поддерживает кроссплатформенность (Linux/Windows),</p>
+<p>может отображать подробную информацию (-v),</p>
+<p>извлекает длительность MP4-файлов через парсинг атомов moov/mvhd. </p>
+</div><h2 class="groupheader">Макросы</h2>
+<a id="afc9149f5de51bd9ac4f5ebbfa153f018"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc9149f5de51bd9ac4f5ebbfa153f018">&#9670;&nbsp;</a></span>COLOR_GREEN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COLOR_GREEN&#160;&#160;&#160;&quot;\033[32m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a17f760256046df23dd0ab46602f04d02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17f760256046df23dd0ab46602f04d02">&#9670;&nbsp;</a></span>COLOR_RESET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COLOR_RESET&#160;&#160;&#160;&quot;\033[0m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4534b577b74a58b0f4b7be027af664e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4534b577b74a58b0f4b7be027af664e0">&#9670;&nbsp;</a></span>COLOR_YELLOW</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COLOR_YELLOW&#160;&#160;&#160;&quot;\033[33m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Функции</h2>
+<a id="a5f36eab0c293def17389d05756abb89b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f36eab0c293def17389d05756abb89b">&#9670;&nbsp;</a></span>find_atom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int find_atom </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>atom_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t *&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t *&#160;</td>
+          <td class="paramname"><em>start_pos</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Поиск атома по имени. </p>
+<div class="dynheader">
+Граф вызовов:</div>
+<div class="dyncontent">
+<div class="center"><img src="mp4__scanner_8c_a5f36eab0c293def17389d05756abb89b_cgraph.png" border="0" usemap="#amp4__scanner_8c_a5f36eab0c293def17389d05756abb89b_cgraph" alt=""/></div>
+<map name="amp4__scanner_8c_a5f36eab0c293def17389d05756abb89b_cgraph" id="amp4__scanner_8c_a5f36eab0c293def17389d05756abb89b_cgraph">
+<area shape="rect" title="Поиск атома по имени." alt="" coords="5,5,92,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#a161a21cfb49accf9fed1bdf0a3d42d23" title="Чтение 4 байт в формате big&#45;endian." alt="" coords="293,5,399,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#a7edeab36df12870782ef1426bf8ab346" title="Чтение 8 байт в формате big&#45;endian." alt="" coords="140,31,245,57"/>
+</map>
+</div>
+<div class="dynheader">
+Граф вызова функции:</div>
+<div class="dyncontent">
+<div class="center"><img src="mp4__scanner_8c_a5f36eab0c293def17389d05756abb89b_icgraph.png" border="0" usemap="#amp4__scanner_8c_a5f36eab0c293def17389d05756abb89b_icgraph" alt=""/></div>
+<map name="amp4__scanner_8c_a5f36eab0c293def17389d05756abb89b_icgraph" id="amp4__scanner_8c_a5f36eab0c293def17389d05756abb89b_icgraph">
+<area shape="rect" title="Поиск атома по имени." alt="" coords="461,5,548,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#a07ebee5ddbd47841c3bb46a8c8312561" title="Получение длительности MP4&#45;файла." alt="" coords="273,5,413,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#ab7623127c01dad97d3c546b524c9cd53" title="Рекурсивное сканирование директории." alt="" coords="108,5,225,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Точка входа в программу." alt="" coords="5,5,60,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a5c2a0224143b17328733adf1a8d538ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c2a0224143b17328733adf1a8d538ce">&#9670;&nbsp;</a></span>format_duration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void format_duration </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>total_seconds</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>hours</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>minutes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>seconds</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Форматирует длительность в часы, минуты и секунды. </p>
+<div class="dynheader">
+Граф вызова функции:</div>
+<div class="dyncontent">
+<div class="center"><img src="mp4__scanner_8c_a5c2a0224143b17328733adf1a8d538ce_icgraph.png" border="0" usemap="#amp4__scanner_8c_a5c2a0224143b17328733adf1a8d538ce_icgraph" alt=""/></div>
+<map name="amp4__scanner_8c_a5c2a0224143b17328733adf1a8d538ce_icgraph" id="amp4__scanner_8c_a5c2a0224143b17328733adf1a8d538ce_icgraph">
+<area shape="rect" title="Форматирует длительность в часы, минуты и секунды." alt="" coords="273,5,400,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Точка входа в программу." alt="" coords="5,5,60,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#ab7623127c01dad97d3c546b524c9cd53" title="Рекурсивное сканирование директории." alt="" coords="108,31,225,57"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a07ebee5ddbd47841c3bb46a8c8312561"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07ebee5ddbd47841c3bb46a8c8312561">&#9670;&nbsp;</a></span>get_mp4_duration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structMP4Duration.html">MP4Duration</a> get_mp4_duration </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Получение длительности MP4-файла. </p>
+<div class="dynheader">
+Граф вызовов:</div>
+<div class="dyncontent">
+<div class="center"><img src="mp4__scanner_8c_a07ebee5ddbd47841c3bb46a8c8312561_cgraph.png" border="0" usemap="#amp4__scanner_8c_a07ebee5ddbd47841c3bb46a8c8312561_cgraph" alt=""/></div>
+<map name="amp4__scanner_8c_a07ebee5ddbd47841c3bb46a8c8312561_cgraph" id="amp4__scanner_8c_a07ebee5ddbd47841c3bb46a8c8312561_cgraph">
+<area shape="rect" title="Получение длительности MP4&#45;файла." alt="" coords="5,56,145,83"/>
+<area shape="rect" href="mp4__scanner_8c.html#a5f36eab0c293def17389d05756abb89b" title="Поиск атома по имени." alt="" coords="193,5,280,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#a161a21cfb49accf9fed1bdf0a3d42d23" title="Чтение 4 байт в формате big&#45;endian." alt="" coords="481,56,587,83"/>
+<area shape="rect" href="mp4__scanner_8c.html#a7edeab36df12870782ef1426bf8ab346" title="Чтение 8 байт в формате big&#45;endian." alt="" coords="328,56,433,83"/>
+</map>
+</div>
+<div class="dynheader">
+Граф вызова функции:</div>
+<div class="dyncontent">
+<div class="center"><img src="mp4__scanner_8c_a07ebee5ddbd47841c3bb46a8c8312561_icgraph.png" border="0" usemap="#amp4__scanner_8c_a07ebee5ddbd47841c3bb46a8c8312561_icgraph" alt=""/></div>
+<map name="amp4__scanner_8c_a07ebee5ddbd47841c3bb46a8c8312561_icgraph" id="amp4__scanner_8c_a07ebee5ddbd47841c3bb46a8c8312561_icgraph">
+<area shape="rect" title="Получение длительности MP4&#45;файла." alt="" coords="273,5,413,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#ab7623127c01dad97d3c546b524c9cd53" title="Рекурсивное сканирование директории." alt="" coords="108,5,225,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Точка входа в программу." alt="" coords="5,5,60,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a0ddf1224851353fc92bfbff6f499fa97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ddf1224851353fc92bfbff6f499fa97">&#9670;&nbsp;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>argv</em>[]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Точка входа в программу. </p>
+<div class="dynheader">
+Граф вызовов:</div>
+<div class="dyncontent">
+<div class="center"><img src="mp4__scanner_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph.png" border="0" usemap="#amp4__scanner_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph" alt=""/></div>
+<map name="amp4__scanner_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph" id="amp4__scanner_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph">
+<area shape="rect" title="Точка входа в программу." alt="" coords="5,31,60,57"/>
+<area shape="rect" href="mp4__scanner_8c.html#a5c2a0224143b17328733adf1a8d538ce" title="Форматирует длительность в часы, минуты и секунды." alt="" coords="280,5,407,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#ab7623127c01dad97d3c546b524c9cd53" title="Рекурсивное сканирование директории." alt="" coords="108,56,225,83"/>
+<area shape="rect" href="mp4__scanner_8c.html#a07ebee5ddbd47841c3bb46a8c8312561" title="Получение длительности MP4&#45;файла." alt="" coords="273,56,413,83"/>
+<area shape="rect" href="mp4__scanner_8c.html#a01d4f7e7055b9bcd2deb858dd2dd4015" title="Усечение длинных путей для отображения." alt="" coords="287,107,399,133"/>
+<area shape="rect" href="mp4__scanner_8c.html#a5f36eab0c293def17389d05756abb89b" title="Поиск атома по имени." alt="" coords="461,5,548,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#a161a21cfb49accf9fed1bdf0a3d42d23" title="Чтение 4 байт в формате big&#45;endian." alt="" coords="749,56,855,83"/>
+<area shape="rect" href="mp4__scanner_8c.html#a7edeab36df12870782ef1426bf8ab346" title="Чтение 8 байт в формате big&#45;endian." alt="" coords="596,56,701,83"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a161a21cfb49accf9fed1bdf0a3d42d23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a161a21cfb49accf9fed1bdf0a3d42d23">&#9670;&nbsp;</a></span>read_u32_be()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t read_u32_be </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>file</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Чтение 4 байт в формате big-endian. </p>
+<div class="dynheader">
+Граф вызова функции:</div>
+<div class="dyncontent">
+<div class="center"><img src="mp4__scanner_8c_a161a21cfb49accf9fed1bdf0a3d42d23_icgraph.png" border="0" usemap="#amp4__scanner_8c_a161a21cfb49accf9fed1bdf0a3d42d23_icgraph" alt=""/></div>
+<map name="amp4__scanner_8c_a161a21cfb49accf9fed1bdf0a3d42d23_icgraph" id="amp4__scanner_8c_a161a21cfb49accf9fed1bdf0a3d42d23_icgraph">
+<area shape="rect" title="Чтение 4 байт в формате big&#45;endian." alt="" coords="749,24,855,50"/>
+<area shape="rect" href="mp4__scanner_8c.html#a5f36eab0c293def17389d05756abb89b" title="Поиск атома по имени." alt="" coords="461,24,548,50"/>
+<area shape="rect" href="mp4__scanner_8c.html#a07ebee5ddbd47841c3bb46a8c8312561" title="Получение длительности MP4&#45;файла." alt="" coords="273,24,413,50"/>
+<area shape="rect" href="mp4__scanner_8c.html#a7edeab36df12870782ef1426bf8ab346" title="Чтение 8 байт в формате big&#45;endian." alt="" coords="596,74,701,101"/>
+<area shape="rect" href="mp4__scanner_8c.html#ab7623127c01dad97d3c546b524c9cd53" title="Рекурсивное сканирование директории." alt="" coords="108,24,225,50"/>
+<area shape="rect" href="mp4__scanner_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Точка входа в программу." alt="" coords="5,24,60,50"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a7edeab36df12870782ef1426bf8ab346"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7edeab36df12870782ef1426bf8ab346">&#9670;&nbsp;</a></span>read_u64_be()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t read_u64_be </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>file</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Чтение 8 байт в формате big-endian. </p>
+<div class="dynheader">
+Граф вызовов:</div>
+<div class="dyncontent">
+<div class="center"><img src="mp4__scanner_8c_a7edeab36df12870782ef1426bf8ab346_cgraph.png" border="0" usemap="#amp4__scanner_8c_a7edeab36df12870782ef1426bf8ab346_cgraph" alt=""/></div>
+<map name="amp4__scanner_8c_a7edeab36df12870782ef1426bf8ab346_cgraph" id="amp4__scanner_8c_a7edeab36df12870782ef1426bf8ab346_cgraph">
+<area shape="rect" title="Чтение 8 байт в формате big&#45;endian." alt="" coords="5,5,111,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#a161a21cfb49accf9fed1bdf0a3d42d23" title="Чтение 4 байт в формате big&#45;endian." alt="" coords="159,5,264,32"/>
+</map>
+</div>
+<div class="dynheader">
+Граф вызова функции:</div>
+<div class="dyncontent">
+<div class="center"><img src="mp4__scanner_8c_a7edeab36df12870782ef1426bf8ab346_icgraph.png" border="0" usemap="#amp4__scanner_8c_a7edeab36df12870782ef1426bf8ab346_icgraph" alt=""/></div>
+<map name="amp4__scanner_8c_a7edeab36df12870782ef1426bf8ab346_icgraph" id="amp4__scanner_8c_a7edeab36df12870782ef1426bf8ab346_icgraph">
+<area shape="rect" title="Чтение 8 байт в формате big&#45;endian." alt="" coords="596,31,701,57"/>
+<area shape="rect" href="mp4__scanner_8c.html#a5f36eab0c293def17389d05756abb89b" title="Поиск атома по имени." alt="" coords="461,5,548,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#a07ebee5ddbd47841c3bb46a8c8312561" title="Получение длительности MP4&#45;файла." alt="" coords="273,31,413,57"/>
+<area shape="rect" href="mp4__scanner_8c.html#ab7623127c01dad97d3c546b524c9cd53" title="Рекурсивное сканирование директории." alt="" coords="108,31,225,57"/>
+<area shape="rect" href="mp4__scanner_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Точка входа в программу." alt="" coords="5,31,60,57"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab7623127c01dad97d3c546b524c9cd53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7623127c01dad97d3c546b524c9cd53">&#9670;&nbsp;</a></span>scan_directory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void scan_directory </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structStats.html">Stats</a> *&#160;</td>
+          <td class="paramname"><em>stats</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structOptions.html">Options</a> *&#160;</td>
+          <td class="paramname"><em>opts</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Рекурсивное сканирование директории. </p>
+<div class="dynheader">
+Граф вызовов:</div>
+<div class="dyncontent">
+<div class="center"><img src="mp4__scanner_8c_ab7623127c01dad97d3c546b524c9cd53_cgraph.png" border="0" usemap="#amp4__scanner_8c_ab7623127c01dad97d3c546b524c9cd53_cgraph" alt=""/></div>
+<map name="amp4__scanner_8c_ab7623127c01dad97d3c546b524c9cd53_cgraph" id="amp4__scanner_8c_ab7623127c01dad97d3c546b524c9cd53_cgraph">
+<area shape="rect" title="Рекурсивное сканирование директории." alt="" coords="5,56,123,83"/>
+<area shape="rect" href="mp4__scanner_8c.html#a5c2a0224143b17328733adf1a8d538ce" title="Форматирует длительность в часы, минуты и секунды." alt="" coords="177,5,304,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#a07ebee5ddbd47841c3bb46a8c8312561" title="Получение длительности MP4&#45;файла." alt="" coords="171,56,311,83"/>
+<area shape="rect" href="mp4__scanner_8c.html#a01d4f7e7055b9bcd2deb858dd2dd4015" title="Усечение длинных путей для отображения." alt="" coords="185,107,297,133"/>
+<area shape="rect" href="mp4__scanner_8c.html#a5f36eab0c293def17389d05756abb89b" title="Поиск атома по имени." alt="" coords="359,5,445,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#a161a21cfb49accf9fed1bdf0a3d42d23" title="Чтение 4 байт в формате big&#45;endian." alt="" coords="647,56,752,83"/>
+<area shape="rect" href="mp4__scanner_8c.html#a7edeab36df12870782ef1426bf8ab346" title="Чтение 8 байт в формате big&#45;endian." alt="" coords="493,56,599,83"/>
+</map>
+</div>
+<div class="dynheader">
+Граф вызова функции:</div>
+<div class="dyncontent">
+<div class="center"><img src="mp4__scanner_8c_ab7623127c01dad97d3c546b524c9cd53_icgraph.png" border="0" usemap="#amp4__scanner_8c_ab7623127c01dad97d3c546b524c9cd53_icgraph" alt=""/></div>
+<map name="amp4__scanner_8c_ab7623127c01dad97d3c546b524c9cd53_icgraph" id="amp4__scanner_8c_ab7623127c01dad97d3c546b524c9cd53_icgraph">
+<area shape="rect" title="Рекурсивное сканирование директории." alt="" coords="108,5,225,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Точка входа в программу." alt="" coords="5,5,60,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a01d4f7e7055b9bcd2deb858dd2dd4015"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01d4f7e7055b9bcd2deb858dd2dd4015">&#9670;&nbsp;</a></span>truncate_path()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void truncate_path </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>max_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Усечение длинных путей для отображения. </p>
+<div class="dynheader">
+Граф вызова функции:</div>
+<div class="dyncontent">
+<div class="center"><img src="mp4__scanner_8c_a01d4f7e7055b9bcd2deb858dd2dd4015_icgraph.png" border="0" usemap="#amp4__scanner_8c_a01d4f7e7055b9bcd2deb858dd2dd4015_icgraph" alt=""/></div>
+<map name="amp4__scanner_8c_a01d4f7e7055b9bcd2deb858dd2dd4015_icgraph" id="amp4__scanner_8c_a01d4f7e7055b9bcd2deb858dd2dd4015_icgraph">
+<area shape="rect" title="Усечение длинных путей для отображения." alt="" coords="273,5,385,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#ab7623127c01dad97d3c546b524c9cd53" title="Рекурсивное сканирование директории." alt="" coords="108,5,225,32"/>
+<area shape="rect" href="mp4__scanner_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Точка входа в программу." alt="" coords="5,5,60,32"/>
+</map>
+</div>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="mp4__scanner_8c.html">mp4_scanner.c</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

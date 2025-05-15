@@ -1,0 +1,7 @@
+<map id="read_u64_be" name="read_u64_be">
+<area shape="rect" id="node1" title="Чтение 8 байт в формате big&#45;endian." alt="" coords="596,31,701,57"/>
+<area shape="rect" id="node2" href="$mp4__scanner_8c.html#a5f36eab0c293def17389d05756abb89b" title="Поиск атома по имени." alt="" coords="461,5,548,32"/>
+<area shape="rect" id="node3" href="$mp4__scanner_8c.html#a07ebee5ddbd47841c3bb46a8c8312561" title="Получение длительности MP4&#45;файла." alt="" coords="273,31,413,57"/>
+<area shape="rect" id="node4" href="$mp4__scanner_8c.html#ab7623127c01dad97d3c546b524c9cd53" title="Рекурсивное сканирование директории." alt="" coords="108,31,225,57"/>
+<area shape="rect" id="node5" href="$mp4__scanner_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Точка входа в программу." alt="" coords="5,31,60,57"/>
+</map>

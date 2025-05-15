@@ -1,0 +1,5 @@
+<map id="format_duration" name="format_duration">
+<area shape="rect" id="node1" title="Форматирует длительность в часы, минуты и секунды." alt="" coords="273,5,400,32"/>
+<area shape="rect" id="node2" href="$mp4__scanner_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Точка входа в программу." alt="" coords="5,5,60,32"/>
+<area shape="rect" id="node3" href="$mp4__scanner_8c.html#ab7623127c01dad97d3c546b524c9cd53" title="Рекурсивное сканирование директории." alt="" coords="108,31,225,57"/>
+</map>

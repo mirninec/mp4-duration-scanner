@@ -1,0 +1,8 @@
+<map id="read_u32_be" name="read_u32_be">
+<area shape="rect" id="node1" title="Чтение 4 байт в формате big&#45;endian." alt="" coords="749,24,855,50"/>
+<area shape="rect" id="node2" href="$mp4__scanner_8c.html#a5f36eab0c293def17389d05756abb89b" title="Поиск атома по имени." alt="" coords="461,24,548,50"/>
+<area shape="rect" id="node3" href="$mp4__scanner_8c.html#a07ebee5ddbd47841c3bb46a8c8312561" title="Получение длительности MP4&#45;файла." alt="" coords="273,24,413,50"/>
+<area shape="rect" id="node6" href="$mp4__scanner_8c.html#a7edeab36df12870782ef1426bf8ab346" title="Чтение 8 байт в формате big&#45;endian." alt="" coords="596,74,701,101"/>
+<area shape="rect" id="node4" href="$mp4__scanner_8c.html#ab7623127c01dad97d3c546b524c9cd53" title="Рекурсивное сканирование директории." alt="" coords="108,24,225,50"/>
+<area shape="rect" id="node5" href="$mp4__scanner_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Точка входа в программу." alt="" coords="5,24,60,50"/>
+</map>
