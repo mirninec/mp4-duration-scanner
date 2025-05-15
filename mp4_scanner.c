@@ -13,6 +13,7 @@
 #define COLOR_YELLOW "\x1b[33m"
 #define COLOR_GREEN "\x1b[32m"
 #define COLOR_RESET "\x1b[0m"
+#define CP_UTF8 65001
 #else
 #define COLOR_YELLOW "\033[33m"
 #define COLOR_GREEN "\033[32m"
@@ -226,6 +227,10 @@ void scan_directory(const char *path, Stats *stats, Options *opts)
 
 int main(int argc, char *argv[])
 {
+#ifdef _WIN32
+    SetConsoleOutputCP(CP_UTF8);
+#endif
+
     Stats stats = {0, 0, 0.0};
     Options opts = {0};
     char path[PATH_MAX] = {0};
