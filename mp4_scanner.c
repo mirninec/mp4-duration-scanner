@@ -306,9 +306,15 @@ void truncate_path(const char *input, char *output, size_t max_len)
         return;
     }
 
+#ifdef _WIN32
+    size_t head = max_len / 2;
+    size_t tail = max_len / 2;
+    snprintf(output, max_len + 1, "%.*s...%.*s", (int)head, input, (int)tail, input + len - tail);
+#else
     size_t head = max_len / 2 - 2;
     size_t tail = max_len / 2 - 2;
     snprintf(output, max_len + 1, "%.*s...%.*s", (int)head, input, (int)tail, input + len - tail);
+#endif
 }
 
 /**
