@@ -17,7 +17,6 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-#include <dirent.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <ctype.h>
@@ -25,11 +24,13 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#include <shellapi.h>
 #define COLOR_YELLOW "\x1b[33m"
 #define COLOR_GREEN "\x1b[32m"
 #define COLOR_RESET "\x1b[0m"
 #define CP_UTF8 65001
 #else
+#include <dirent.h>
 #define COLOR_YELLOW "\033[33m"
 #define COLOR_GREEN "\033[32m"
 #define COLOR_RESET "\033[0m"
@@ -127,13 +128,112 @@ int find_atom(FILE *file, const char *atom_type, uint64_t *size, uint64_t *start
     return 0;
 }
 
+#ifdef _WIN32
+/**
+ * @brief Преобразует строку UTF-8 в UTF-16 (память выделяется через malloc).
+ */
+static wchar_t *utf8_to_wide(const char *s)
+{
+    int n = MultiByteToWideChar(CP_UTF8, 0, s, -1, NULL, 0);
+    if (n <= 0)
+        return NULL;
+    wchar_t *w = (wchar_t *)malloc((size_t)n * sizeof(wchar_t));
+    if (!w)
+        return NULL;
+    MultiByteToWideChar(CP_UTF8, 0, s, -1, w, n);
+    return w;
+}
+
+/**
+ * @brief Преобразует строку UTF-16 в UTF-8 (память выделяется через malloc).
+ */
+static char *wide_to_utf8(const wchar_t *w)
+{
+    int n = WideCharToMultiByte(CP_UTF8, 0, w, -1, NULL, 0, NULL, NULL);
+    if (n <= 0)
+        return NULL;
+    char *s = (char *)malloc((size_t)n);
+    if (!s)
+        return NULL;
+    WideCharToMultiByte(CP_UTF8, 0, w, -1, s, n, NULL, NULL);
+    return s;
+}
+
+/**
+ * @brief Строит из пути UTF-8 абсолютный "длинный" путь с префиксом \\?\
+ *
+ * Префикс снимает ограничение MAX_PATH (260 символов) в Win32 API.
+ * Для сетевых путей (\\server\share) используется префикс \\?\UNC\
+ * Результат нужно освободить через free().
+ */
+static wchar_t *to_long_path(const char *utf8)
+{
+    wchar_t *w = utf8_to_wide(utf8);
+    if (!w)
+        return NULL;
+
+    DWORD n = GetFullPathNameW(w, 0, NULL, NULL);
+    if (n == 0)
+    {
+        free(w);
+        return NULL;
+    }
+
+    wchar_t *full = (wchar_t *)malloc((size_t)n * sizeof(wchar_t));
+    wchar_t *out = (wchar_t *)malloc(((size_t)n + 16) * sizeof(wchar_t));
+    if (!full || !out || GetFullPathNameW(w, n, full, NULL) == 0)
+    {
+        free(w);
+        free(full);
+        free(out);
+        return NULL;
+    }
+    free(w);
+
+    if (wcsncmp(full, L"\\\\?\\", 4) == 0)
+    {
+        wcscpy(out, full);
+    }
+    else if (wcsncmp(full, L"\\\\", 2) == 0)
+    {
+        wcscpy(out, L"\\\\?\\UNC\\");
+        wcscat(out, full + 2);
+    }
+    else
+    {
+        wcscpy(out, L"\\\\?\\");
+        wcscat(out, full);
+    }
+    free(full);
+    return out;
+}
+#endif
+
+/**
+
+@brief Открывает файл на чтение (на Windows - с поддержкой путей длиннее 260 символов и Unicode).
+*/
+static FILE *open_file_rb(const char *filename)
+{
+#ifdef _WIN32
+    wchar_t *lp = to_long_path(filename);
+    if (!lp)
+        return NULL;
+    FILE *f = _wfopen(lp, L"rb");
+    free(lp);
+    return f;
+#else
+    return fopen(filename, "rb");
+#endif
+}
+
 /**
 
 @brief Получение длительности MP4-файла.
 */
 MP4Duration get_mp4_duration(const char *filename)
 {
-    FILE *file = fopen(filename, "rb");
+    FILE *file = open_file_rb(filename);
     MP4Duration result = {0, 0};
     if (!file)
         return result;
@@ -206,16 +306,164 @@ void truncate_path(const char *input, char *output, size_t max_len)
         return;
     }
 
-#ifdef _WIN32
-    size_t head = max_len / 2;
-    size_t tail = max_len / 2;
-    snprintf(output, max_len + 1, "%.*s...%.*s", (int)head, input, (int)tail, input + len - tail);
-#else
     size_t head = max_len / 2 - 2;
     size_t tail = max_len / 2 - 2;
     snprintf(output, max_len + 1, "%.*s...%.*s", (int)head, input, (int)tail, input + len - tail);
-#endif
 }
+
+/**
+
+@brief Проверяет, что имя файла заканчивается на ".mp4" (без учёта регистра).
+*/
+static int has_mp4_ext(const char *name)
+{
+    size_t len = strlen(name);
+    if (len < 4)
+        return 0;
+    const char *ext = name + len - 4;
+    return ext[0] == '.' &&
+           tolower((unsigned char)ext[1]) == 'm' &&
+           tolower((unsigned char)ext[2]) == 'p' &&
+           ext[3] == '4';
+}
+
+/**
+
+@brief Добавляет MP4-файл в статистику (если удалось прочитать его длительность).
+*/
+static void add_mp4_file(const char *full_path, Stats *stats, int *local_count, double *local_duration)
+{
+    MP4Duration d = get_mp4_duration(full_path);
+    if (d.found)
+    {
+        stats->total_files++;
+        (*local_count)++;
+        *local_duration += d.duration_seconds;
+        stats->total_duration_seconds += d.duration_seconds;
+    }
+    else
+    {
+        fprintf(stderr, "Warning: cannot read duration: %s\n", full_path);
+    }
+}
+
+/**
+
+@brief Выводит итог по папке (в режиме -v) и обновляет счётчик папок.
+*/
+static void report_folder(const char *path, int local_count, double local_duration, Stats *stats, Options *opts)
+{
+    if (local_count <= 0)
+        return;
+
+    stats->total_folders_with_mp4++;
+    if (opts->verbose)
+    {
+        int h, m, s;
+        format_duration(local_duration, &h, &m, &s);
+        char time_str[32];
+        snprintf(time_str, sizeof(time_str), "%d:%02d:%02d", h, m, s);
+
+        char truncated[128];
+        truncate_path(path, truncated, 90);
+
+        printf("\xF0\x9F\x9F\xA1 %s " COLOR_GREEN "%s\n" COLOR_RESET, time_str, truncated);
+    }
+}
+
+/**
+
+@brief Склеивает путь папки и имя элемента (память выделяется через malloc).
+*/
+static char *join_path(const char *dir, const char *name)
+{
+    size_t dl = strlen(dir);
+    size_t nl = strlen(name);
+    char *r = (char *)malloc(dl + nl + 2);
+    if (!r)
+        return NULL;
+    memcpy(r, dir, dl);
+    if (dl > 0 && dir[dl - 1] != '/' && dir[dl - 1] != '\\')
+        r[dl++] = '/';
+    memcpy(r + dl, name, nl + 1);
+    return r;
+}
+
+#ifdef _WIN32
+
+/**
+
+@brief Рекурсивное сканирование директории (Windows: Unicode и пути длиннее 260 символов).
+*/
+void scan_directory(const char *path, Stats *stats, Options *opts)
+{
+    int local_mp4_count = 0;
+    double local_duration = 0.0;
+
+    wchar_t *lp = to_long_path(path);
+    if (!lp)
+    {
+        fprintf(stderr, "Error: bad path: %s\n", path);
+        return;
+    }
+
+    size_t len = wcslen(lp);
+    wchar_t *pattern = (wchar_t *)malloc((len + 3) * sizeof(wchar_t));
+    if (!pattern)
+    {
+        free(lp);
+        return;
+    }
+    wcscpy(pattern, lp);
+    if (len > 0 && pattern[len - 1] != L'\\')
+        pattern[len++] = L'\\';
+    pattern[len] = L'*';
+    pattern[len + 1] = L'\0';
+    free(lp);
+
+    WIN32_FIND_DATAW fd;
+    HANDLE h = FindFirstFileW(pattern, &fd);
+    free(pattern);
+    if (h == INVALID_HANDLE_VALUE)
+    {
+        fprintf(stderr, "Error: cannot open folder (code %lu): %s\n", (unsigned long)GetLastError(), path);
+        return;
+    }
+
+    do
+    {
+        if (!wcscmp(fd.cFileName, L".") || !wcscmp(fd.cFileName, L".."))
+            continue;
+
+        char *name = wide_to_utf8(fd.cFileName);
+        if (!name)
+            continue;
+        char *full_path = join_path(path, name);
+        free(name);
+        if (!full_path)
+            continue;
+
+        if (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+        {
+            /* Символьные ссылки и junction пропускаем, чтобы не уйти в цикл */
+            if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT))
+                scan_directory(full_path, stats, opts);
+        }
+        else
+        {
+            char *base = wide_to_utf8(fd.cFileName);
+            if (base && has_mp4_ext(base))
+                add_mp4_file(full_path, stats, &local_mp4_count, &local_duration);
+            free(base);
+        }
+        free(full_path);
+    } while (FindNextFileW(h, &fd));
+
+    FindClose(h);
+    report_folder(path, local_mp4_count, local_duration, stats, opts);
+}
+
+#else
 
 /**
 
@@ -237,52 +485,25 @@ void scan_directory(const char *path, Stats *stats, Options *opts)
         if (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, ".."))
             continue;
 
-        char full_path[PATH_MAX];
-        snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
-
-        if (stat(full_path, &st) == -1)
+        char *full_path = join_path(path, entry->d_name);
+        if (!full_path)
             continue;
 
-        if (S_ISDIR(st.st_mode))
+        if (stat(full_path, &st) != -1)
         {
-            scan_directory(full_path, stats, opts);
+            if (S_ISDIR(st.st_mode))
+                scan_directory(full_path, stats, opts);
+            else if (S_ISREG(st.st_mode) && has_mp4_ext(entry->d_name))
+                add_mp4_file(full_path, stats, &local_mp4_count, &local_duration);
         }
-        else if (S_ISREG(st.st_mode))
-        {
-            const char *ext = strrchr(entry->d_name, '.');
-            if (ext && strcasecmp(ext, ".mp4") == 0)
-            {
-                MP4Duration d = get_mp4_duration(full_path);
-                if (d.found)
-                {
-                    stats->total_files++;
-                    local_mp4_count++;
-                    local_duration += d.duration_seconds;
-                    stats->total_duration_seconds += d.duration_seconds;
-                }
-            }
-        }
-    }
-
-    if (local_mp4_count > 0)
-    {
-        stats->total_folders_with_mp4++;
-        if (opts->verbose)
-        {
-            int h, m, s;
-            format_duration(local_duration, &h, &m, &s);
-            char time_str[32];
-            snprintf(time_str, sizeof(time_str), "%d:%02d:%02d", h, m, s);
-
-            char truncated[128];
-            truncate_path(path, truncated, 90);
-
-            printf("\xF0\x9F\x9F\xA1 %s " COLOR_GREEN "%s\n" COLOR_RESET, time_str, truncated);
-        }
+        free(full_path);
     }
 
     closedir(dir);
+    report_folder(path, local_mp4_count, local_duration, stats, opts);
 }
+
+#endif
 
 /**
 
@@ -290,18 +511,39 @@ void scan_directory(const char *path, Stats *stats, Options *opts)
 */
 int main(int argc, char *argv[])
 {
-#ifdef _WIN32
-    SetConsoleOutputCP(CP_UTF8);
-#endif
-
     Stats stats = {0, 0, 0.0};
     Options opts = {0};
+#ifndef _WIN32
     char path[PATH_MAX] = {0};
+#endif
     const char *target_dir = NULL;
+
+#ifdef _WIN32
+    SetConsoleOutputCP(CP_UTF8);
+
+    // Аргументы берём в UTF-16 и переводим в UTF-8 (argv в ANSI ломает Unicode-пути)
+    int wargc = 0;
+    wchar_t **wargv = CommandLineToArgvW(GetCommandLineW(), &wargc);
+    char **u8argv = NULL;
+    if (wargv)
+    {
+        u8argv = (char **)calloc((size_t)wargc + 1, sizeof(char *));
+        if (u8argv)
+        {
+            for (int i = 0; i < wargc; ++i)
+                u8argv[i] = wide_to_utf8(wargv[i]);
+            argc = wargc;
+            argv = u8argv;
+        }
+    }
+    char *cwd8 = NULL;
+#endif
 
     // Обработка аргументов командной строки
     for (int i = 1; i < argc; ++i)
     {
+        if (!argv[i])
+            continue;
         if (strcmp(argv[i], "-v") == 0)
         {
             opts.verbose = 1;
@@ -314,12 +556,24 @@ int main(int argc, char *argv[])
 
     if (!target_dir)
     {
+#ifdef _WIN32
+        DWORD need = GetCurrentDirectoryW(0, NULL);
+        wchar_t *wcwd = need ? (wchar_t *)malloc((size_t)need * sizeof(wchar_t)) : NULL;
+        if (!wcwd || GetCurrentDirectoryW(need, wcwd) == 0 || !(cwd8 = wide_to_utf8(wcwd)))
+        {
+            fprintf(stderr, "GetCurrentDirectory failed\n");
+            return 1;
+        }
+        free(wcwd);
+        target_dir = cwd8;
+#else
         if (!getcwd(path, sizeof(path)))
         {
             perror("getcwd failed");
             return 1;
         }
         target_dir = path;
+#endif
     }
 
     printf("\xF0\x9F\x95\x92 Scanning folder: %s\n", target_dir);
